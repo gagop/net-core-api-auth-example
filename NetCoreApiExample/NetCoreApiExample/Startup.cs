@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using NetCoreApiExample.Infrastructure;
 using NetCoreApiExample.Models;
+using System;
 using System.Text;
 
 namespace NetCoreApiExample
@@ -35,8 +36,9 @@ namespace NetCoreApiExample
                             ValidateIssuer = true,
                             ValidateAudience = true,
                             ValidateLifetime = true,
-                            ValidIssuer = "https://localhost:44301",
-                            ValidAudience = "https://localhost:44301",
+                            ClockSkew = TimeSpan.Zero,
+                            ValidIssuer = "https://localhost:5001", //should come from configuration
+                            ValidAudience = "https://localhost:5001", //should come from configuration
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecretKey"]))
                         };
                     });
@@ -56,7 +58,7 @@ namespace NetCoreApiExample
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-        
+
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();

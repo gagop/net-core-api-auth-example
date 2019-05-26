@@ -1,11 +1,21 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NetCoreApiExample.Infrastructure;
+using NetCoreApiExample.Models;
+using System.Threading.Tasks;
 
 namespace NetCoreApiExample.Controllers
 {
     [Route("api/test")]
     public class TestController : Controller
     {
+
+        private readonly CustomDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
+
+
+        
         [HttpGet("public-data")]
         public string PublicTest()
         {

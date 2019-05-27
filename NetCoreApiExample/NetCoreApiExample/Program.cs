@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using NetCoreApiExample.Infrastructure;
-using NetCoreApiExample.Models;
 
 namespace NetCoreApiExample
 {

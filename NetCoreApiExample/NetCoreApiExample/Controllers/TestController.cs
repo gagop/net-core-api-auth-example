@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NetCoreApiExample.Infrastructure;
 using NetCoreApiExample.Models;
-using System.Threading.Tasks;
 
 namespace NetCoreApiExample.Controllers
 {
@@ -15,7 +14,7 @@ namespace NetCoreApiExample.Controllers
         private readonly UserManager<AppUser> _userManager;
 
 
-        
+
         [HttpGet("public-data")]
         public string PublicTest()
         {

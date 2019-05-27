@@ -34,6 +34,7 @@ namespace NetCoreApiExample.Controllers
 
             var userclaim = new[] {
                     new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Role, "user"),
                     new Claim(ClaimTypes.Role, "admin")
                     //Add additional data here
                 };

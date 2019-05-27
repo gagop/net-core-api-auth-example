@@ -29,9 +29,16 @@ namespace NetCoreApiExample.Controllers
             return "This data is secret";
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         [HttpGet("secret-data-for-admin")]
         public string SecretDataForAdmin()
+        {
+            return "This data is secret and only for admins";
+        }
+
+        [Authorize(Roles = "admin2")]
+        [HttpGet("secret-data-for-admin2")]
+        public string SecretDataForAdmin2()
         {
             return "This data is secret and only for admins";
         }

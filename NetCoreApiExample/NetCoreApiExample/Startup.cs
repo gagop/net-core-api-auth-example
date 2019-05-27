@@ -78,6 +78,7 @@ namespace NetCoreApiExample
                 EmailConfirmed = true,
                 UserName = "kowal"
             };
+
             var pass = new PasswordHasher<AppUser>();
             appUser.PasswordHash = pass.HashPassword(appUser, "asd123");
 

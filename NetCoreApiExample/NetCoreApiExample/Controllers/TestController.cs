@@ -12,9 +12,7 @@ namespace NetCoreApiExample.Controllers
 
         private readonly CustomDbContext _context;
         private readonly UserManager<AppUser> _userManager;
-
-
-
+        
         [HttpGet("public-data")]
         public string PublicTest()
         {

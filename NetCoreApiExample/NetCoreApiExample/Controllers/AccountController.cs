@@ -27,9 +27,9 @@ namespace NetCoreApiExample.Controllers
         [HttpPost("login")]
         public IActionResult Login(LoginRequest request)
         {
+            //TODO Here we should check the credentials! Here we are just taking the first user.
             var user = _context.Users.ToList().First();
-            //TODO Check password!
-
+            
             if (user == null) return NotFound();
 
             var userclaim = new[] {
@@ -69,6 +69,8 @@ namespace NetCoreApiExample.Controllers
             {
                 return NotFound("Refresh token not found");
             }
+
+            //TODO Here we should additionally check if the refresh token hasn't expired!
 
             var userclaim = new[] {
                     new Claim(ClaimTypes.Name, user.UserName),

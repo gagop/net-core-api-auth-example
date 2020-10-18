@@ -43,7 +43,7 @@ namespace NetCoreApiExample
                         };
                     });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,23 +63,23 @@ namespace NetCoreApiExample
             app.UseAuthentication();
             app.UseMvc();
 
-            using (var serviceScope = app.ApplicationServices.CreateScope())
+            using (IServiceScope serviceScope = app.ApplicationServices.CreateScope())
             {
-                var context = serviceScope.ServiceProvider.GetService<CustomDbContext>();
+                CustomDbContext context = serviceScope.ServiceProvider.GetService<CustomDbContext>();
                 AddTestData(context);
             }
         }
 
         private static void AddTestData(CustomDbContext context)
         {
-            var appUser = new AppUser
+            AppUser appUser = new AppUser
             {
                 Email = "kowalski@wp.pl",
                 EmailConfirmed = true,
                 UserName = "kowal"
             };
 
-            var pass = new PasswordHasher<AppUser>();
+            PasswordHasher<AppUser> pass = new PasswordHasher<AppUser>();
             appUser.PasswordHash = pass.HashPassword(appUser, "asd123");
 
             context.Users.Add(appUser);

@@ -28,21 +28,24 @@ namespace NetCoreApiExample.Controllers
         public IActionResult Login(LoginRequest request)
         {
             //TODO Here we should check the credentials! Here we are just taking the first user.
-            var user = _context.Users.ToList().First();
-            
-            if (user == null) return NotFound();
+            AppUser user = _context.Users.ToList().First();
 
-            var userclaim = new[] {
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            Claim[] userclaim = new[] {
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(ClaimTypes.Role, "user"),
                     new Claim(ClaimTypes.Role, "admin")
                     //Add additional data here
                 };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecretKey"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecretKey"]));
+            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(
+            JwtSecurityToken token = new JwtSecurityToken(
                 issuer: "https://localhost:5001",
                 audience: "https://localhost:5001",
                 claims: userclaim,
@@ -62,9 +65,9 @@ namespace NetCoreApiExample.Controllers
         }
 
         [HttpPost("{refreshToken}/refresh")]
-        public IActionResult RefreshToken([FromRoute]string refreshToken)
+        public IActionResult RefreshToken([FromRoute] string refreshToken)
         {
-            var user = _context.Users.SingleOrDefault(m => m.RefreshToken == refreshToken);
+            AppUser user = _context.Users.SingleOrDefault(m => m.RefreshToken == refreshToken);
             if (user == null)
             {
                 return NotFound("Refresh token not found");
@@ -72,17 +75,17 @@ namespace NetCoreApiExample.Controllers
 
             //TODO Here we should additionally check if the refresh token hasn't expired!
 
-            var userclaim = new[] {
+            Claim[] userclaim = new[] {
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(ClaimTypes.Role, "user"),
                     new Claim(ClaimTypes.Role, "admin")
                     //Add additional data here
                 };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecretKey"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecretKey"]));
+            SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(
+            JwtSecurityToken token = new JwtSecurityToken(
                 issuer: "https://localhost:5001",
                 audience: "https://localhost:5001",
                 claims: userclaim,
